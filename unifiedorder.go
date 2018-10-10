@@ -14,28 +14,35 @@ const (
 
 type UnifiedOrderRequest struct {
 	XMLName        xml.Name `xml:"xml"`
-	AppId          string   `xml:"appid,omitempty"`            // 公众账号ID（企业号corpid即为此appId）
-	MchId          string   `xml:"mch_id,omitempty"`           // 微信支付分配的商户号
-	DeviceInfo     string   `xml:"device_info,omitempty"`      // 自定义参数，可以为终端设备号(门店号或收银设备ID)，PC网页或公众号内支付可以传"WEB"
-	NonceStr       string   `xml:"nonce_str,omitempty"`        // 随机字符串
-	Sign           string   `xml:"sign,omitempty"`             // 通过签名算法计算得出的签名值，详见签名生成算法
-	SignType       string   `xml:"sign_type,omitempty"`        // 签名类型，默认为MD5，支持HMAC-SHA256和MD5。
-	Body           string   `xml:"body,omitempty"`             // 商品简单描述，该字段请按照规范传递，具体请见参数规定
-	Detail         string   `xml:"detail,omitempty"`           // 商品详细描述，对于使用单品优惠的商户，改字段必须按照规范上传，详见“单品优惠参数说明”
-	Attach         string   `xml:"attach,omitempty"`           // 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用。
-	OutTradeNo     string   `xml:"out_trade_no,omitempty"`     // 商户系统内部订单号，要求32个字符内，只能是数字、大小写字母_-|* 且在同一个商户号下唯一。详见商户订单号
-	FeeType        string   `xml:"fee_type,omitempty"`         // 符合ISO 4217标准的三位字母代码，默认人民币：CNY，详细列表请参见货币类型
-	TotalFee       int64    `xml:"total_fee,omitempty"`        // 订单总金额，单位为分，详见支付金额
-	SpBillCreateIp string   `xml:"spbill_create_ip,omitempty"` // APP和网页支付提交用户端ip，Native支付填调用微信支付API的机器IP。
+	AppId          string   `xml:"appid,omitempty"`
+	MchId          string   `xml:"mch_id,omitempty"`
+	DeviceInfo     string   `xml:"device_info,omitempty"`
+	NonceStr       string   `xml:"nonce_str,omitempty"`
+	Sign           string   `xml:"sign,omitempty"`
+	SignType       string   `xml:"sign_type,omitempty"`
+	Body           string   `xml:"body,omitempty"`
+	Detail         string   `xml:"detail,omitempty"`
+	Attach         string   `xml:"attach,omitempty"`
+	OutTradeNo     string   `xml:"out_trade_no,omitempty"`
+	FeeType        string   `xml:"fee_type,omitempty"`
+	TotalFee       int64    `xml:"total_fee,omitempty"`
+	SpBillCreateIp string   `xml:"spbill_create_ip,omitempty"`
 	TimeStart      string   `xml:"time_start,omitempty"`
 	TimeExpire     string   `xml:"time_expire,omitempty"`
 	GoodsTag       string   `xml:"goods_tag,omitempty"`
-	NotifyUrl      string   `xml:"notify_url,omitempty"` // 异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
-	TradeType      string   `xml:"trade_type,omitempty"` // JSAPI 公众号支付  NATIVE 扫码支付  APP APP支付  说明详见参数规定
-	ProductId      string   `xml:"product_id,omitempty"` // trade_type=NATIVE时（即扫码支付），此参数必传。此参数为二维码中包含的商品ID，商户自行定义。
-	LimitPay       string   `xml:"limit_pay,omitempty"`  // 上传此参数no_credit--可限制用户不能使用信用卡支付
-	OpenId         string   `xml:"openid,omitempty"`     // 公众号id
-	SceneInfo      string   `xml:"scene_info,omitempty"` // 该字段用于上报场景信息
+	NotifyUrl      string   `xml:"notify_url,omitempty"`
+	TradeType      string   `xml:"trade_type,omitempty"`
+	ProductId      string   `xml:"product_id,omitempty"`
+	LimitPay       string   `xml:"limit_pay,omitempty"`
+	OpenId         string   `xml:"openid,omitempty"`
+	SceneInfo      string   `xml:"scene_info,omitempty"`
+}
+
+// 默认时间为30分钟
+func TimeExpire() string {
+	now := time.Now().UTC()
+	duration := time.Duration(30*time.Minute) + time.Duration(8*time.Hour)
+	return now.Add(duration).Format("20060102150405")
 }
 
 type UnifiedOrderResponse struct {
@@ -58,6 +65,7 @@ func (c *Client) UnifiedOrder(request *UnifiedOrderRequest) (*UnifiedOrderRespon
 	request.AppId = c.appId
 	request.MchId = c.mchId
 	request.NonceStr = nonceStr()
+	request.TimeExpire = TimeExpire()
 	request.Sign = signStruct(request, c.apiKey)
 
 	if len(request.Body) == 0 {
