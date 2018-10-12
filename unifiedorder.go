@@ -129,10 +129,10 @@ func (c *Client) GetBrandWCPayRequest(resp *UnifiedOrderResponse) string {
 		Package:   "prepay_id=" + resp.PrepayId,
 		SignType:  "MD5",
 	}
+	brandWCPayRequest.PaySign = signStruct(brandWCPayRequest, c.apiKey)
 	bytes, err := json.Marshal(brandWCPayRequest)
 	if err != nil {
 		globalLogger.printf("%s marshal err: %s", "GetBrandWCPayRequest: ", err.Error())
 	}
-	brandWCPayRequest.PaySign = signStruct(brandWCPayRequest, c.apiKey)
 	return string(bytes)
 }
