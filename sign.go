@@ -16,7 +16,6 @@ func checkSign(stream []byte, key string) (err error) {
 			notifyAsync(string(stream), err)
 		}
 	}()
-
 	reqMap := make(map[string]string)
 	err = xml.Unmarshal(stream, (*Map)(&reqMap))
 	if err != nil {
@@ -27,7 +26,7 @@ func checkSign(stream []byte, key string) (err error) {
 		err = signNotMatchErr
 		return
 	}
-	return err
+	return
 }
 
 func sign(req map[string]string, key string) string {

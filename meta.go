@@ -3,6 +3,7 @@ package wxpay
 const (
 	errCodeNoAuth             = "NOAUTH"                // 商户无此接口权限
 	errCodeNotEnough          = "NOTENOUGH"             // 余额不足
+	errCodeTradeOverDue       = "TRADE_OVERDUE"         //  订单已经超过退款期限
 	errCodeOrderPaid          = "ORDERPAID"             // 商户订单已支付
 	errCodeOrderClosed        = "ORDERCLOSED"           // 订单已关闭
 	errCodeSystemError        = "SYSTEMERROR"           // 系统错误
@@ -52,4 +53,12 @@ func (meta Meta) IsSystemErr() bool {
 
 func (meta *Meta) IsBizerrNeedRetry() bool {
 	return meta.ErrCode == errCodeBizerrNeedRetry
+}
+
+func (meta *Meta) IsNotEnough() bool {
+	return meta.ErrCode == errCodeNotEnough
+}
+
+func (meta *Meta) IsTradeOverDue() bool {
+	return meta.ErrCode == errCodeTradeOverDue
 }
