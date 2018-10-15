@@ -8,7 +8,7 @@ func TestMeta_IsNotEnough(t *testing.T) {
 	}
 
 	if !meta.IsNotEnough() {
-		t.Error("not enough")
+		t.Error("NOTENOUGH")
 	}
 }
 
@@ -18,6 +18,16 @@ func TestMeta_IsTradeOverDue(t *testing.T) {
 	}
 
 	if !meta.IsTradeOverDue() {
-		t.Error("not enough")
+		t.Error("TRADE_OVERDUE")
+	}
+}
+
+func TestMeta_IsRefundNotExist(t *testing.T) {
+	meta := &Meta{
+		ErrCode: "REFUNDNOTEXIST",
+	}
+
+	if !meta.IsRefundNotExist() {
+		t.Error("REFUNDNOTEXIST")
 	}
 }

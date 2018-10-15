@@ -19,6 +19,7 @@ const (
 	errCodeNotUtf8            = "NOT_UTF8"              // 编码格式错误
 	errCodeOrderNotExist      = "ORDERNOTEXIST"         // 此交易订单号不存在
 	errCodeBizerrNeedRetry    = "BIZERR_NEED_RETRY"     // 退款业务流程错误，需要商户触发重试来解决
+	errCodeRefundNotExist     = "REFUNDNOTEXIST"        // 退款订单查询失败 订单号错误或订单状态不正确
 )
 
 const (
@@ -61,4 +62,8 @@ func (meta *Meta) IsNotEnough() bool {
 
 func (meta *Meta) IsTradeOverDue() bool {
 	return meta.ErrCode == errCodeTradeOverDue
+}
+
+func (meta *Meta) IsRefundNotExist() bool {
+	return meta.ErrCode == errCodeRefundNotExist
 }
