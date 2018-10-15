@@ -18,6 +18,14 @@ const (
 	downloadBillUrl = "https://api.mch.weixin.qq.com/pay/downloadbill"
 )
 
+const (
+	BillTypeAll            = "ALL"             // 返回当日所有订单信息，默认值
+	BillTypeSuccess        = "SUCCESS"         // 返回当日成功支付的订单
+	BillTypeRefund         = "REFUND"          // 返回当日退款订单
+	BillTypeRechargeRefund = "RECHARGE_REFUND" // 返回当日充值退款订单
+)
+
+// https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_6
 type DownloadBillRequest struct {
 	XMLName  xml.Name `xml:"xml"`
 	AppId    string   `xml:"appid,omitempty"`
