@@ -134,5 +134,6 @@ func (c *Client) GetBrandWCPayRequest(resp *UnifiedOrderResponse) string {
 	if err != nil {
 		globalLogger.printf("%s marshal err: %s", "GetBrandWCPayRequest: ", err.Error())
 	}
+	globalLogger.printf("GetBrandWCPayRequest: %s", string(bytes))
 	return string(bytes)
 }
