@@ -5,8 +5,16 @@ import (
 	"strconv"
 )
 
+// https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_5
 const (
 	refundQueryUrl = "https://api.mch.weixin.qq.com/pay/refundquery"
+)
+
+const (
+	RefundStatusSuccess     = "SUCCESS"     // 退款成功
+	RefundStatusRefundClose = "REFUNDCLOSE" // 退款关闭。
+	RefundStatusProcessing  = "PROCESSING"  // 退款处理中
+	RefundStatusChange      = "CHANGE"      // 退款异常，退款到银行发现用户的卡作废或者冻结了，导致原路退款银行卡失败，可前往商户平台（pay.weixin.qq.com）-交易中心，手动处理
 )
 
 type RefundQueryRequest struct {
