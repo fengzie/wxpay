@@ -9,8 +9,7 @@ const (
 
 // 微信的错误,请不要修改内容
 const (
-	billNoExistErr = Error("NO Bill Exist")
-
+	billNoExistErr = Error("No Bill Exist")
 )
 
 func (err Error) Error() string {
