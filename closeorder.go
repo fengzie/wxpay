@@ -26,7 +26,6 @@ type CloseOrderResponse struct {
 }
 
 func (c *Client) CloseOrder(request *CloseOrderRequest) (*CloseOrderResponse, error) {
-	request.AppId = c.appId
 	request.MchId = c.mchId
 	request.NonceStr = nonceStr()
 	request.Sign = signStruct(request, c.apiKey)

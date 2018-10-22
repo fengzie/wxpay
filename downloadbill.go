@@ -70,7 +70,6 @@ tryLoop:
 			tempDelay = max
 		}
 
-		request.AppId = c.appId
 		request.MchId = c.mchId
 		request.NonceStr = nonceStr()
 		request.TarType = "GZIP"

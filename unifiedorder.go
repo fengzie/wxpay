@@ -62,7 +62,6 @@ type UnifiedOrderResponse struct {
 // 如果是公众号支付，必填openid
 // 如果是h5支付，必填scene_info
 func (c *Client) UnifiedOrder(request *UnifiedOrderRequest) (*UnifiedOrderResponse, error) {
-	request.AppId = c.appId
 	request.MchId = c.mchId
 	request.NonceStr = nonceStr()
 	request.TimeExpire = TimeExpire()
@@ -123,7 +122,7 @@ type BrandWCPayRequest struct {
 
 func (c *Client) GetBrandWCPayRequest(resp *UnifiedOrderResponse) string {
 	brandWCPayRequest := &BrandWCPayRequest{
-		AppID:     c.appId,
+		AppID:     resp.AppId,
 		Timestamp: strconv.FormatInt(time.Now().Unix(), 10),
 		NonceStr:  nonceStr(),
 		Package:   "prepay_id=" + resp.PrepayId,

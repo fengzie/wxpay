@@ -28,7 +28,6 @@ type ReverseResponse struct {
 
 // 仅用于刷卡支付
 func (c *Client) Reverse(request *ReverseRequest) (*ReverseResponse, error) {
-	request.AppId = c.appId
 	request.MchId = c.mchId
 	request.NonceStr = nonceStr()
 	request.Sign = signStruct(request, c.apiKey)

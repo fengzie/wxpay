@@ -49,7 +49,6 @@ type OrderQueryResponse struct {
 }
 
 func (c *Client) OrderQuery(request *OrderQueryRequest) (*OrderQueryResponse, error) {
-	request.AppId = c.appId
 	request.MchId = c.mchId
 	request.NonceStr = nonceStr()
 	request.Sign = signStruct(request, c.apiKey)

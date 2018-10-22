@@ -49,7 +49,6 @@ type RefundResponse struct {
 }
 
 func (c *Client) Refund(request *RefundRequest) (*RefundResponse, error) {
-	request.AppId = c.appId
 	request.MchId = c.mchId
 	request.NonceStr = nonceStr()
 	request.Sign = signStruct(request, c.apiKey)
