@@ -21,6 +21,13 @@ func checkSign(stream []byte, key string) (err error) {
 	if err != nil {
 		return
 	}
+
+	// fengzie: 企业付款到零钱成功时没有sign值，但有专有的mch_appid
+	if reqMap["mch_appid"] != "" {
+		err = nil
+		return
+	}
+
 	md5Sign := sign(reqMap, key)
 	if reqMap["sign"] != md5Sign {
 		err = signNotMatchErr

@@ -20,7 +20,7 @@ var tlsClient = &http.Client{
 
 func selectedClient(url string) *http.Client {
 	switch url {
-	case refundUrl, reverseUrl:
+	case refundUrl, reverseUrl, transferURL:
 		return tlsClient
 	default:
 		return client
